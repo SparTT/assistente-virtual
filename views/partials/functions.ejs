@@ -1,0 +1,56 @@
+<script>
+
+  
+async function sendComment(userComment, username) {
+
+  let data = { 
+    comment: userComment,
+    username: username
+  }
+  return new Promise( async (resolve, reject) => {
+    await fetch('/send-comment', {
+      method: 'POST',
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(resp => resp.json())
+    .then(resp => {
+      resolve(resp)
+    }).catch(error => {
+      console.log(error)
+      reject(error)
+    })
+  })
+}
+
+function convertArrayToBase64(audio) {
+  var res = btoa(new Uint8Array(audio).reduce(function (data, byte) {
+    return data + String.fromCharCode(byte);
+  }, ''));
+  return res
+}
+
+function playWatson(id) {
+
+  let data = { commentId: id }
+
+  fetch('/read-comment', {
+    method: 'POST',
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(resp => resp.json())
+  .then(async resp => {
+    
+    var audio = convertArrayToBase64(resp.audio.data)
+    sound = new Audio('data:audio/wav;base64,' + audio);
+    return sound.play()
+  })
+
+}
+
+</script>

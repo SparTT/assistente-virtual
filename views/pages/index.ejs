@@ -1,0 +1,114 @@
+<html lang="pt-br">
+<head>
+  <%- include ('../partials/head.ejs') %>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <title>Assistente Virtual</title>
+</head>
+<body>
+  <div class="container">
+    <div class="col">
+      <div id="comment-form" class="content">
+        <div class="input-username">
+          <p style="margin-block-end: 0.5em;"><strong>Insira um nome de usuário <small>(opcional)</small></strong></p>
+          <input type="text" name="username" id="username">
+        </div>
+        <div class="input-comment">
+          <h2>Insira um comentário</h2>
+          <textarea id="comment" rows="9" name="comment" style="max-height: 150px; resize: vertical; min-height: 105px;"></textarea>
+        </div>
+        <button id="submit-comment">Enviar comentário</button>
+      </div>
+    </div>
+    <div class="col">
+      <div id="inserted-comments">
+        <h3>Comentários inseridos</h3>
+        <div class="comments-container"></div>
+      </div>
+    </div> 
+  </div>
+</body>
+</html>
+<%- include ('../partials/functions.ejs') %>
+<script>
+
+/*
+  https://dev.to/achowba/build-a-simple-app-using-node-js-and-mysql-19me
+*/
+
+document.querySelector('#submit-comment').addEventListener('click', async () => {
+
+  let userComment = document.querySelector('#comment').value
+  let username = document.querySelector('#username').value.length === 0 ? 'Anônimo' : document.querySelector('#username').value
+
+  if(userComment.length === 0)  return alert('Insira um comentário')
+
+  document.querySelector('#submit-comment').setAttribute('disabled', true)
+  document.querySelector('#submit-comment').innerText = 'Enviando...'
+  
+  var res = await sendComment(userComment, username)
+  
+  if(res.status === 'ok') {
+    alert('Comentário adicionado')
+
+    if(document.querySelector('#no-comments') !== null) {
+      document.querySelector('#no-comments').remove()
+    }
+
+    var div = document.createElement('div')
+    div.classList.add('comment')
+    div.innerHTML = 
+    `
+      <div class="comment-info">Comentário feito <span>agora</span> por <span>${username}</span></div>
+      <div class="comment-text">${userComment}</div>
+      <button class="listen-btn" onclick="playWatson(${res.commentId})">Ouvir</button>
+    `
+    document.querySelector('.comments-container').insertBefore(div, document.querySelector('.comments-container').childNodes[0])
+  } else {
+    alert(res.errorMsg)
+  }
+  document.querySelector('#submit-comment').removeAttribute('disabled')
+  document.querySelector('#submit-comment').innerText = 'Enviar comentário'
+  document.querySelector('#comment').value = ''
+  document.querySelector('#username').value = ''
+})
+
+fetch('/get-comments')
+.then(resp => resp.json())
+.then(resp => {
+  
+  resp = resp.rows
+  
+  if (resp.length === 0) {
+    var div = document.createElement('div')
+    div.id = 'no-comments'
+    div.innerHTML = '<h5>Sem comentários adicionados :(</h5>'
+    return document.querySelector('.comments-container').append(div)   
+  }
+
+  let timezoneOptions = {
+      year: 'numeric', month: 'numeric', day: 'numeric',
+      hour: 'numeric', minute: 'numeric',
+      hour12: false
+  };
+
+  for(val of resp) {
+    
+    var div = document.createElement('div')
+    div.classList.add('comment')
+    
+    var time = new Date(val.created_at)
+    let timestamp = new Intl.DateTimeFormat('pt-BR', timezoneOptions).format(time)  
+
+    div.innerHTML = 
+    `
+      <div class="comment-info">Comentário feito <span>${timestamp}</span> por <span>${val.username}</span></div>
+      <div class="comment-text">${val.comment}</div>
+      <button class="listen-btn" onclick="playWatson(${val.id})">Ouvir</button>      
+    `
+
+    document.querySelector('.comments-container').append(div)
+
+  }
+})
+
+</script>

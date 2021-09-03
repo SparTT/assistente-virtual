@@ -1,0 +1,67 @@
+body {
+  font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  background-color: #f3f3f3;
+}
+
+.container {
+  display: grid;
+  grid-template-areas:
+    'a b';
+  margin-top: 5%;
+  grid-gap: 1ch;
+  grid-template-columns: 70% 30%;
+  /* width: 1360px; */
+}
+
+.col:nth-child(1) {
+    border-right: 3px solid black;
+}
+
+#comment-form, #inserted-comments {
+  padding: 1ch;
+}
+
+#username {
+  padding-top: 0.7ch;
+  padding-bottom: 0.7ch;
+  padding-left: 8px;
+}
+
+#username, #comment, #submit-comment {
+  width: 85%;
+}
+
+#submit-comment {
+  margin-top: 2ch;
+  font-size: 1.1em;
+  padding-top: 0.8ch;
+  padding-bottom: 0.8ch;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+.comment-info {
+  font-size: 11px;
+  font-style: italic;
+  grid-area: comment-info;
+}
+
+.comment {
+  display: grid;
+  grid-template-areas:
+    'comment-info comment-info'
+    'comment-text listen-btn';
+  grid-template-columns: 75% 10%;
+}
+
+.comment-text {
+  grid-area: comment-text;
+}
+
+.listen-btn {
+  grid-area: listen-btn;
+  width: max-content;
+  padding-top: 0.5ch;
+  padding-bottom: 0.5ch;
+}
