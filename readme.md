@@ -10,7 +10,7 @@ A razão pela qual escolhi armazenar o buffer ao invés de enviar uma requisiç�
 
 Requisitos:
 - Um servidor [MySQL 8](https://dev.mysql.com/downloads/) 
-- Nodejs instalado [Node.js](https://nodejs.org/)
+- [Node.js](https://nodejs.org/) instalado
 - Conta na [IBM](https://www.ibm.com/cloud/watson-text-to-speech) para usar a API Text To Speech;
 
 
