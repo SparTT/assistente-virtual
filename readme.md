@@ -23,7 +23,7 @@ As seguintes dependências serão usadas na aplicação:
 - ibm-watson: será usado para converter os textos para áudio
 
 Por que o mysql2?
-O mysql tem problemas de autenticação com o MySQL 8 [explicação](https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server)
+O mysql tem problemas de autenticação com o MySQL 8 ([explicação])(https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server)
 
 
 Instale as dependências:

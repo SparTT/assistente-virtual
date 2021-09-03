@@ -29,8 +29,6 @@ connection.connect((err) => {
 });
 
 
-
-
 /*
 
   Caso essa aplicação seja alterada para ser executada em MySQL 5, a dependência mysql2 poderá ser trocada pelo mysql
