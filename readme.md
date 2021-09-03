@@ -3,13 +3,13 @@
 
 Essa aplicação tem como objetivo cadastrar comentários, listar eles, e permitir que seja executado um áudio que irá ler o comentário inserido.
 
-Os comentários inseridos serão armazenados em um banco de dados mySQL e listados no painel de de comentários inseridos.
+Os comentários inseridos serão armazenados em um banco de dados MySQL e listados no painel de de comentários inseridos.
 Clicar em ouvir enviará uma requisição ao banco de dados, onde estará armazenado um buffer do arquivo de áudio gerado pela API Text to Speech.
 
 A razão pela qual escolhi armazenar o buffer ao invés de enviar uma requisição direto para a API foi para minimizar o gasto de caracteres da versão Lite da API, que tem um limite de 10,000 caracteres.
 
 Requisitos:
-- Um servidor [MySQL 8](https://dev.mysql.com/downloads/) 
+- Um banco de dados [MySQL 8](https://dev.mysql.com/downloads/) 
 - [Node.js](https://nodejs.org/) instalado
 - Conta na [IBM](https://www.ibm.com/cloud/watson-text-to-speech) para usar a API Text To Speech;
 
@@ -21,6 +21,7 @@ As seguintes dependências serão usadas na aplicação:
 - ejs: engine usada para criação de templates
 - mysql2: cliente MySQL para Node.js
 - ibm-watson: será usado para converter os textos para áudio
+- dotenv: meio para armazenar configurações do ambiente (chaves de API, login de banco de dados) do lado de fora do código
 
 Por que o mysql2?
 O mysql tem problemas de autenticação com o MySQL 8 ([explicação])(https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server)
@@ -51,24 +52,17 @@ CREATE TABLE IF NOT EXISTS `assistant-comments` (
 
 ## Parâmetros
 
-No arquivo app.js, troque os valores de apiKey e apiUrl pelas suas credenciais da API.
+Dentro do diretório `assistente-virtual`, crie um arquivo `.env` (sem nome algum, somente a extensão .env) 
+
+No arquivo `.env`, copie o comando abaixo e preencha com suas credenciais:
 
 ```sh
-const apiKey = 'your-api-key'
-const apiUrl = 'your-text-to-speech-url'
-
-```
-
-
-Troque os valores de connection pelos valores de conexão do seu banco de dados.
-
-```sh
-const connection  = mysql.createConnection ({
-  host: 'your-url',
-  user: 'your-user',
-  password: 'your-password',
-  database: 'your-db'
-})
+API_KEY=YOUR_API_KEY
+API_URL=YOUR_API_URL
+DB_HOST=YOUR_DB_HOST
+DB_USER=YOUR_DB_USERNAME
+DB_PASS=YOUR_DB_PASSWORD
+DB_DATABASE=YOUR_DB_DATABASE
 
 ```
 

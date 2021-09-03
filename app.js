@@ -2,22 +2,21 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql2')
+require('dotenv').config()
+
 const PORT = 5000
 
-const apiKey = ''
-const apiUrl = ''
-
-global.apiKey = apiKey;
-global.apiUrl = apiUrl;
+global.apiKey = process.env.API_KEY;
+global.apiUrl = process.env.API_URL;
 
 const { sendComment, getComments } = require('./routers/comments');
 const { readComment, loadWavFile } = require('./routers/read-comment');
 
 const connection  = mysql.createConnection ({
-  host: '',
-  user: '',
-  password: '',
-  database: ''
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_DATABASE
 })
 global.connection = connection;
 
@@ -49,6 +48,7 @@ connection.connect((err) => {
   * Add campos de username e timestamp no mysql -- ok
   * Melhorar interface 
   * Fazer filterSwearing p/ filtrar certas palavras
+  * Adicionar arquivo .env
 
 */
 
