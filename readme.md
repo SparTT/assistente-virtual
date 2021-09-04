@@ -30,6 +30,7 @@ O mysql tem problemas de autenticação com o MySQL 8 ([explicação])(https://s
 Instale as dependências:
 
 ```sh
+git clone https://github.com/SparTT/assistente-virtual.git
 cd assistente-virtual
 npm i
 ```
