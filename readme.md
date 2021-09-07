@@ -24,7 +24,7 @@ As seguintes dependências serão usadas na aplicação:
 - dotenv: meio para armazenar configurações do ambiente (chaves de API, login de banco de dados) do lado de fora do código
 
 Por que o mysql2?
-O mysql tem problemas de autenticação com o MySQL 8 ([explicação])(https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server)
+O mysql tem problemas de autenticação com o MySQL 8 ([explicação](https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server))
 
 
 Instale as dependências:
